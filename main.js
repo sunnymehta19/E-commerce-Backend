@@ -8,8 +8,13 @@ const ownerRouter = require("./routes/ownerRouter");
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");
 const userModel = require("./models/userModel")
+const index = require("./routes/index");
+
+require("dotenv").config()
 
 const db = require("./config/mongooseConnection")
+
+
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -20,10 +25,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/owner", ownerRouter);
 app.use("/user", userRouter);
 app.use("/product", productRouter);
+app.use("/", index)
+
 
 app.get("/", (req, res) => {
     res.send("this is main")
 })
+
+app.get("/login", (req, res) => {
+    res.render("login")
+})
+
 
 app.listen(port, () => {
     console.log(`server is running on port ${port}`);
