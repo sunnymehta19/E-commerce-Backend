@@ -124,4 +124,50 @@ router.get("/dashboard", isOwner, async (req, res) => {
     });
 });
 
+
+// ADMIN ORDERS PAGE
+router.get("/orders", isOwner, async (req, res) => {
+    try {
+        // Fetch all users because orders are stored inside user.order[]
+        let users = await userModel.find().populate("order.items.product");
+
+        let allOrders = [];
+
+        users.forEach(user => {
+            user.order.forEach(o => {
+                allOrders.push({
+                    user: user.username,
+                    email: user.email,
+                    items: o.items,
+                    amountPaid: o.amountPaid,
+                    status: o.status,
+                    orderId: o._id,
+                    date: o.date
+                });
+            });
+        });
+
+        res.render("admin/adminOrders", { allOrders });
+
+    } catch (err) {
+        res.send(err.message);
+    }
+});
+
+
+// SHOW CREATE PRODUCT PAGE
+router.get("/create-product", isOwner, (req, res) => {
+    let success = req.flash("success");
+    res.render("createProduct", { success });
+});
+
+// SHOW EDIT PRODUCT PAGE (redirects to correct product route)
+router.get("/edit-product/:id", isOwner, async (req, res) => {
+    let product = await productModel.findById(req.params.id);
+    res.render("editProduct", { product });
+});
+
+
+
+
 module.exports = router;

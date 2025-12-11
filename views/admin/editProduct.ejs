@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <title>Edit Product</title>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- TOP NAV -->
+    <div class="w-full bg-white shadow-sm h-[70px] flex justify-between items-center px-6 fixed top-0 left-0 z-40">
+
+        <button onclick="openSidebar()" class="text-3xl md:hidden">
+            <i class="ri-menu-line"></i>
+        </button>
+
+        <h1 class="text-2xl font-semibold">Edit Product</h1>
+
+        <a href="/owner/logout"
+            class="bg-red-600 px-4 py-2 text-white rounded-lg hover:bg-red-700">Logout</a>
+    </div>
+
+    <!-- SIDEBAR -->
+<%- include("../partials/adminSidebar") %>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-[90px] md:ml-64 px-6">
+
+        <h2 class="text-3xl font-bold mb-6">Edit Product</h2>
+
+        <div class="bg-white p-6 shadow rounded-xl max-w-2xl">
+
+            <form action="/product/edit/<%= product._id %>" method="POST">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <input name="name" type="text" value="<%= product.name %>"
+                        class="border p-3 rounded-lg" required>
+
+                    <input name="price" type="number" value="<%= product.price %>"
+                        class="border p-3 rounded-lg" required>
+
+                    <input name="discount" type="number" value="<%= product.discount %>"
+                        class="border p-3 rounded-lg" required>
+
+                    <input name="bgcolor" type="text" value="<%= product.bgcolor %>"
+                        class="border p-3 rounded-lg" required>
+
+                    <input name="panelcolor" type="text" value="<%= product.panelcolor %>"
+                        class="border p-3 rounded-lg" required>
+
+                    <input name="textcolor" type="text" value="<%= product.textcolor %>"
+                        class="border p-3 rounded-lg" required>
+
+                </div>
+
+                <button class="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function openSidebar() {
+            document.getElementById("sidebar").classList.remove("-translate-x-full");
+        }
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.add("-translate-x-full");
+        }
+    </script>
+
+</body>
+</html>

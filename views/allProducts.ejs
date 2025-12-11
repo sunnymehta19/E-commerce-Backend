@@ -28,24 +28,7 @@
     </div>
 
     <!-- SIDEBAR -->
-    <aside id="sidebar"
-        class="fixed top-[70px] left-0 w-64 bg-white h-[calc(100vh-70px)] shadow-md p-6 transition-all duration-300 
-        md:translate-x-0 -translate-x-full z-50">
-
-        <h2 class="text-lg font-semibold mb-4">Admin Menu</h2>
-
-        <div class="flex flex-col gap-4 text-gray-700">
-            <a href="/owner/admin" class="hover:text-black">Dashboard</a>
-            <a href="/product/all" class="text-black font-semibold">Manage Products</a>
-            <a href="/product/create" class="hover:text-black">Create Product</a>
-            <a href="/owner/logout" class="text-red-600 hover:text-red-800">Logout</a>
-        </div>
-
-        <!-- Close Button for Mobile -->
-        <button onclick="closeSidebar()" class="absolute top-5 right-5 text-2xl md:hidden">
-            <i class="ri-close-line"></i>
-        </button>
-    </aside>
+<%- include("./partials/adminSidebar") %>
 
     <!-- MAIN CONTENT -->
     <main class="pt-[90px] md:ml-64 px-6 transition-all duration-300">
@@ -53,7 +36,7 @@
         <h2 class="text-3xl font-bold mb-6">Manage Products</h2>
 
         <!-- CREATE PRODUCT BUTTON -->
-        <a href="/product/create"
+        <a href="/owner/create-product"
             class="inline-block mb-5 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">
             + Create New Product
         </a>

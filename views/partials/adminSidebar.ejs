@@ -1,0 +1,47 @@
+<!-- SIDEBAR (Desktop + Mobile Slide-in) -->
+<aside id="sidebar"
+    class="fixed top-[70px] left-0 w-64 bg-white h-[calc(100vh-70px)] shadow-md p-6
+           transition-all duration-300 z-50 md:translate-x-0 -translate-x-full">
+
+    <h2 class="text-lg font-semibold mb-4 text-gray-800">Admin Menu</h2>
+
+    <div class="flex flex-col gap-4 text-gray-700">
+
+        <a href="/owner/admin" class="hover:text-black flex items-center gap-2">
+            <i class="ri-dashboard-line"></i> Dashboard
+        </a>
+
+        <a href="/product/all" class="hover:text-black flex items-center gap-2">
+            <i class="ri-database-2-line"></i> Manage Products
+        </a>
+
+        <a href="/owner/create-product" class="hover:text-black flex items-center gap-2">
+            <i class="ri-add-circle-line"></i> Create Product
+        </a>
+
+        <a href="/owner/orders" class="hover:text-black flex items-center gap-2">
+            <i class="ri-file-list-line"></i> Manage Orders
+        </a>
+
+        <a href="/owner/logout" class="text-red-600 hover:text-red-800 flex items-center gap-2">
+            <i class="ri-logout-box-line"></i> Logout
+        </a>
+
+    </div>
+
+    <!-- Mobile Close Button -->
+    <button onclick="closeSidebar()"
+        class="absolute top-4 right-4 text-2xl md:hidden">
+        <i class="ri-close-line"></i>
+    </button>
+</aside>
+
+<script>
+function openSidebar() {
+    document.getElementById("sidebar").classList.remove("-translate-x-full");
+}
+
+function closeSidebar() {
+    document.getElementById("sidebar").classList.add("-translate-x-full");
+}
+</script>

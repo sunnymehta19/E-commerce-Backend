@@ -6,40 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-    <title>Create Product</title>
+
+    <title>Admin | Create Product</title>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-100">
 
+    <!-- FLASH MESSAGE -->
     <% if (success && success.length > 0) { %>
     <div
         class="flash-success fixed top-20 left-1/2 -translate-x-1/2 
         w-72 sm:w-96 bg-green-100 border-l-4 border-green-500 text-green-800 
-        px-4 py-3 rounded-md shadow-md animate-slideDown z-50">
+        px-4 py-3 rounded-md shadow-md animate-slideDown z-[999]">
         <span><%= success %></span>
     </div>
     <% } %>
 
-    <%- include("partials/header") %>
+    <!-- TOP ADMIN NAVBAR -->
+    <header class="fixed top-0 left-0 w-full bg-white h-[70px] shadow flex items-center justify-between px-6 z-50">
 
-    <!-- PAGE WRAPPER -->
-    <div class="pt-[90px] px-4 md:px-10 py-10 flex flex-col md:flex-row gap-6">
+        <!-- Hamburger (Mobile) -->
+        <button onclick="openSidebar()" class="text-3xl md:hidden">
+            <i class="ri-menu-line"></i>
+        </button>
 
-        <!-- SIDEBAR (Changes to top bar on mobile) -->
-        <div class="w-full md:w-[25%] bg-white md:bg-transparent md:shadow-none shadow-sm p-4 md:p-0 rounded-lg">
+        <h1 class="text-2xl font-bold">BagVerse Admin</h1>
 
-            <div class="flex md:flex-col gap-4 md:gap-2 text-center md:text-left">
-                <a class="block w-full md:w-fit text-gray-700 font-medium hover:text-black"
-                    href="/product/all">All Products</a>
+        <a href="/owner/logout"
+            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium">
+            Logout
+        </a>
+    </header>
 
-                <a class="block w-full md:w-fit text-gray-700 font-medium hover:text-black"
-                    href="/product/create">Create New Product</a>
-            </div>
+    <!-- SIDEBAR -->
+   <%- include("./partials/adminSidebar") %>
 
-        </div>
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="pt-[90px] md:ml-64 px-4 md:px-10 pb-10 transition-all duration-300">
 
-        <!-- MAIN CONTENT -->
-        <main class="w-full md:w-3/4 bg-white p-6 md:p-8 shadow rounded-lg">
+        <main class="bg-white p-6 md:p-8 shadow rounded-lg">
 
             <h2 class="text-xl font-bold mb-4">Create New Product</h2>
 
@@ -69,12 +74,13 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <input name="name" type="text" placeholder="Product Name"
                             class="border p-2 rounded w-full" required>
+
                         <input name="price" type="text" placeholder="Product Price"
                             class="border p-2 rounded w-full" required>
+
                         <input name="discount" type="text" placeholder="Discount Price"
                             class="border p-2 rounded w-full" required>
                     </div>
-
                 </div>
 
                 <!-- PANEL DETAILS -->
@@ -84,32 +90,45 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <input name="bgcolor" type="text" placeholder="Background Color"
                             class="border p-2 rounded w-full" required>
+
                         <input name="panelcolor" type="text" placeholder="Panel Color"
                             class="border p-2 rounded w-full" required>
+
                         <input name="textcolor" type="text" placeholder="Text Color"
                             class="border p-2 rounded w-full" required>
                     </div>
                 </div>
 
-                <input
-                    class="px-5 py-2 rounded-lg mt-5 bg-blue-600 hover:bg-blue-700 text-white font-medium cursor-pointer"
-                    type="submit" value="Create New Product">
+                <button
+                    class="px-5 py-2 rounded-lg mt-5 bg-blue-600 hover:bg-blue-700 text-white font-medium">
+                    Create New Product
+                </button>
 
             </form>
         </main>
 
     </div>
 
-    <!-- FLASH MESSAGE SCRIPT -->
+    <!-- SCRIPTS -->
     <script>
+        function openSidebar() {
+            document.getElementById("adminSidebar").classList.remove("-translate-x-full");
+        }
+        function closeSidebar() {
+            document.getElementById("adminSidebar").classList.add("-translate-x-full");
+        }
+
+        // Flash message fade-out
         setTimeout(() => {
-            document.querySelectorAll(".flash-success").forEach(msg => {
+            const messages = document.querySelectorAll(".flash-success");
+            messages.forEach(msg => {
                 msg.style.opacity = "0";
                 msg.style.transition = "opacity .4s";
                 setTimeout(() => msg.remove(), 400);
             });
-        }, 3000);
+        }, 2500);
 
+        // Show selected file name
         document.getElementById("avatarInput").addEventListener("change", function () {
             const fileName = this.files.length > 0 ? this.files[0].name : "No file selected";
             document.getElementById("fileName").textContent = fileName;
@@ -117,4 +136,5 @@
     </script>
 
 </body>
+
 </html>

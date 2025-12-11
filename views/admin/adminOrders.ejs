@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <title>Admin | Orders</title>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- TOP NAV -->
+    <div class="w-full bg-white shadow-sm h-[70px] flex justify-between items-center px-6 fixed top-0 left-0 z-40">
+
+        <button onclick="openSidebar()" class="text-3xl md:hidden">
+            <i class="ri-menu-line"></i>
+        </button>
+
+        <h1 class="text-2xl font-semibold">Manage Orders</h1>
+
+        <a href="/owner/logout"
+            class="bg-red-600 px-4 py-2 text-white rounded-lg hover:bg-red-700">Logout</a>
+    </div>
+
+    <!-- SIDEBAR -->
+<%- include("../partials/adminSidebar") %>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-[90px] md:ml-64 px-6">
+
+        <h2 class="text-3xl font-bold mb-6">All Orders</h2>
+
+        <div class="space-y-6">
+
+            <% allOrders.forEach(order => { %>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h3 class="font-bold text-lg">Order ID: <%= order._id %></h3>
+
+                    <form method="POST" action="/orders/admin/update/<%= order._id %>">
+                        <select name="status" class="border p-2 rounded-lg">
+                            <option <%= order.status==="Processing"?"selected":"" %>>Processing</option>
+                            <option <%= order.status==="Shipped"?"selected":"" %>>Shipped</option>
+                            <option <%= order.status==="Delivered"?"selected":"" %>>Delivered</option>
+                        </select>
+                        <button class="bg-blue-600 text-white px-3 py-1 rounded-lg ml-2">Update</button>
+                    </form>
+                </div>
+
+                <div class="mt-4 space-y-4">
+                    <% order.items.forEach(i => { %>
+
+                    <div class="flex gap-4 items-center bg-gray-50 p-3 rounded-lg">
+
+                        <img src="data:image/jpeg;base64,<%= i.product.image.toString('base64') %>"
+                            class="h-16 rounded border" />
+
+                        <div>
+                            <h4 class="font-bold"><%= i.product.name %></h4>
+                            <p>Qty: <%= i.quantity %></p>
+                            <p class="text-gray-500 text-sm"><%= new Date(order.date).toLocaleDateString() %></p>
+                        </div>
+
+                    </div>
+
+                    <% }) %>
+                </div>
+
+            </div>
+
+            <% }) %>
+
+        </div>
+
+    </main>
+
+    <script>
+        function openSidebar() {
+            document.getElementById("sidebar").classList.remove("-translate-x-full");
+        }
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.add("-translate-x-full");
+        }
+    </script>
+
+</body>
+</html>
