@@ -1,14 +1,23 @@
 const mongoose = require("mongoose");
-const debug = require("debug")("development:mongoose")
-require("dotenv").config();
+const debug = require("debug")("development:mongoose");
 
-mongoose.connect(`${process.env.MONGODB_URI}/bagVerse`)
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
 
-.then(() => {
-    debug("connected");
-})
-.catch((err) => {
-    debug(err);
-});
+const MONGO_URI = process.env.MONGODB_URI;
+
+if (!MONGO_URI) {
+    console.error("MONGODB_URI is missing!");
+    process.exit(1);
+}
+
+mongoose.connect(`${MONGO_URI}/bagVerse`)
+    .then(() => {
+        console.log("MongoDB connected");
+    })
+    .catch((err) => {
+        console.error("MongoDB connection error:", err.message);
+    });
 
 module.exports = mongoose.connection;
