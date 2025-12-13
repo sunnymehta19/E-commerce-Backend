@@ -66,20 +66,31 @@ router.get("/edit/:id", isOwner, async (req, res) => {
 
 // HANDLE EDIT PRODUCT
 router.post("/edit/:id", isOwner, async (req, res) => {
-    const { name, price, discount, bgcolor, panelcolor, textcolor } = req.body;
+    try {
+        const { name, price, discount, bgcolor, panelcolor, textcolor } = req.body;
 
-    await productModel.findByIdAndUpdate(req.params.id, {
-        name,
-        price,
-        discount,
-        bgcolor,
-        panelcolor,
-        textcolor
-    });
+        await productModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                name,
+                price,
+                discount,
+                bgcolor,
+                panelcolor,
+                textcolor
+            },
+            { new: true }
+        );
 
-    req.flash("success", "Product Updated Successfully!");
-    res.redirect("/product/all");
+        req.flash("success", "Product Updated Successfully!");
+        return res.redirect("/product/all");
+
+    } catch (err) {
+        console.error("EDIT PRODUCT ERROR:", err.message);
+        return res.status(500).send("Something went wrong while updating product");
+    }
 });
+
 
 module.exports = router;
 
